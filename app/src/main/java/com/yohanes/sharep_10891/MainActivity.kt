@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             editTextName?.setText(sharedPreferences!!.getString(name, ""))
         }
         if (sharedPreferences!!.contains(email)){
-            editTextName?.setText(sharedPreferences!!.getString(email, ""))
+            editTextEmail?.setText(sharedPreferences!!.getString(email, ""))
         }
 
     }
@@ -41,12 +41,24 @@ class MainActivity : AppCompatActivity() {
         textViewName = findViewById(R.id.textViewName)
         var strName: String = editTextName?.text.toString().trim()
         val strEmail: String = editTextEmail?.text.toString().trim()
+        sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
+        if (sharedPreferences!!.contains(name)){
+            textViewName.text = strName
+        }
+        if (sharedPreferences!!.contains(email)){
+            textViewEmail.text = strEmail
+        }
+        Toast.makeText(baseContext, "Data retrieved", Toast.LENGTH_SHORT).show()
+    }
+
+    fun saveData(view: View){
+        val strName: String = editTextName?.text.toString().trim()
+        val strEmail: String = editTextEmail?.text.toString().trim()
         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
-        editor.putString(name, strName)
-        editor.putString(email, strEmail)
-        editor.apply()
-        Toast.makeText(baseContext, "Saved",
-        Toast.LENGTH_SHORT).show()
+            editor.putString(name, strName)
+            editor.putString(email, strEmail)
+            editor.apply()
+            Toast.makeText(baseContext, "Saved", Toast.LENGTH_SHORT).show()
     }
 
     fun clearData(view: View){
